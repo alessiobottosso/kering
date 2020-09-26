@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Ranking Tool</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+
+    <!-- Unity Headers -->
+    <script src="TemplateData/UnityProgress.js"></script>
+    <script src="Build/UnityLoader.js"></script>
+
+    <script>
+      var gameInstance = null;
+      var Player = null;
+        var isFullscreen = false;
+
+		// Interall Unity function Call
+
+		function GetData(){
+
+			 var userId =  document.getElementById("userId").value;
+			 var unityContainer =  document.getElementById("unityContainer");
+
+            gameInstance.SendMessage("[ApplicationController]", "SetUserID", userId );
+            gameInstance.SendMessage("[ApplicationController]", "StartApplication");
+        }
+
+		//  launch app
+
+		function Start()
+		{
+			var userId =  document.getElementById("userId").value;
+			gameInstance = UnityLoader.instantiate("unityContainer", "Build/Build.json", {onProgress: UnityProgress});
+		}
+
+		// To full scren
+
+		function onFullScreen()
+		{
+            isFullscreen = true;
+			gameInstance.SetFullscreen(1);
+		}
+    </script>
+</head>
+<body>
+    <form>
+        UserId: <input type="text" id="userId" value="Italy.RankingGame@Kering.com" size="100"><br>
+
+    </form>
+
+    <button onclick="Start();">Start </button>
+
+    <div class="webgl-content" style="">
+        <div id="unityContainer" style="width: 960px; height: 600px; margin: auto"></div>
+        <div class="footer">
+            <div class="fullscreen" onclick="onFullScreen()"></div>
+        </div>
+    </div>
+</body>
+
+</html>

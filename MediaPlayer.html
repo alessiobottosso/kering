@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Ranking Media Player</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+
+    <!-- Azure Media Player Headers -->
+    <link href="//amp.azure.net/libs/amp/2.3.5/skins/amp-default/azuremediaplayer.min.css" rel="stylesheet">
+    <script src="//amp.azure.net/libs/amp/2.3.5/azuremediaplayer.min.js"></script>
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        #videoContainer, .mediaplayer-content {
+            width: 100%;
+            height: 100%;
+        }
+
+        .center-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="mediaplayer-content" style="overflow: hidden;">
+        <div id="videoContainer">
+            <video id="azuremediaplayer" class="azuremediaplayer amp-default-skin amp-big-play-centered" tabindex="0"> </video>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+<script>
+    function GetParameter(parameterName) {
+        var result = null,
+            tmp = [];
+        location.search
+            .substr(1)
+            .split("&")
+            .forEach(function (item) {
+              tmp = item.split("=");
+              if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+            });
+        return result;
+    }
+
+    console.log(GetParameter("url"));
+
+    document.title = "Video | " + GetParameter("style") + " | " + GetParameter("material")
+
+    var myOptions = {
+        autoplay: true,
+        controls: true,
+        width: "100%",
+        height: "100%",
+    	logo: {enabled: false},
+        poster: ""
+    };
+    var myPlayer = amp("azuremediaplayer", myOptions);
+    myPlayer.src([{ src: GetParameter("url"), type: "application/vnd.ms-sstr+xml" }, ]);
+</script>
